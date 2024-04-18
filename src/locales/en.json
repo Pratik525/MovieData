@@ -1,0 +1,14 @@
+{
+  "email": "Email",
+  "password": "Password",
+  "login": "Login",
+  "emailIsRequired": "Email is required",
+  "emailValidation": "Invalid Email",
+  "passwordIsRequired": "Password is required",
+  "passwordValidation": "Password must be 8-15 characters, contain at least one uppercase letter, one digit, and one special character",
+  "popularMovies": "Popular Movies",
+  "logout": "Logout",
+  "areYouSure": "Are you sure you want to logout?",
+  "yes": "Yes",
+  "no": "No"
+}
