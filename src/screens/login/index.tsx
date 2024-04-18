@@ -2,14 +2,12 @@
 import React from 'react';
 import {Controller, useForm} from 'react-hook-form';
 import {useTranslation} from 'react-i18next';
-import base64 from 'react-native-base64';
-import {useDispatch} from 'react-redux';
 import CustomButton from '../../components/customButton';
 import CustomTextInput from '../../components/customTextInput';
 import LanguageChangeIcon from '../../components/languageChangeIcon';
-import {setUser} from '../../redux/userProfile';
-import {SCREEN_NAMES} from '../../route/rootStack';
 import {MainContainer, TitleText} from './login.style';
+import {useLogin} from './useLogin';
+import { EMAIL_REGEX, PASSWORD_REGEX } from '../../utils/regex';
 
 interface Props {
   navigation: any;
@@ -25,18 +23,8 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
     reValidateMode: 'onChange',
   });
 
-  const dispatch = useDispatch();
   const {t} = useTranslation();
-
-  const onSubmit = (data: any) => {
-    dispatch(
-      setUser({email: data.email, password: base64.encode(data.password)}),
-    );
-    navigation.reset({
-      index: 0,
-      routes: [{name: SCREEN_NAMES.HOME}],
-    });
-  };
+  const {handleUserSubmit} = useLogin();
 
   return (
     <MainContainer>
@@ -59,7 +47,7 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
         name="email"
         rules={{
           required: t('emailIsRequired'),
-          pattern: {value: /\S+@\S+\.\S+/, message: t('emailValidation')},
+          pattern: {value: EMAIL_REGEX, message: t('emailValidation')},
         }}
         defaultValue=""
       />
@@ -80,7 +68,7 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
         rules={{
           required: t('passwordIsRequired'),
           pattern: {
-            value: /^(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,15}$/,
+            value: PASSWORD_REGEX,
             message: t('passwordValidation'),
           },
         }}
@@ -89,7 +77,7 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
       <CustomButton
         disabled={!isValid}
         title={t('login')}
-        onPress={handleSubmit(onSubmit)}
+        onPress={handleSubmit(handleUserSubmit)}
       />
     </MainContainer>
   );

@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import {CustomTextInputProps} from '.';
+import { I18nManager } from 'react-native';
 
 export const Container = styled.View`
   margin-horizontal: 20px;
@@ -15,6 +16,7 @@ export const TextInputStyled = styled.TextInput`
   width: 100%;
   color: white;
   font-weight: 500;
+  text-align :  ${I18nManager.isRTL ? 'right' : 'left'};
 `;
 
 export const HintText = styled.Text`

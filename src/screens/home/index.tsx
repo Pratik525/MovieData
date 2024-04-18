@@ -3,12 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Alert, FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
 import Config from 'react-native-config';
 import 'react-native-gesture-handler';
-import { useSelector } from 'react-redux';
 import { ImageContainer } from '../../components/languageChangeIcon/languageChangeIcon.style';
-import { fetchData } from '../../redux/movieReducer';
 import { useAppDispatch } from '../../redux/store';
-import { setUser } from '../../redux/userProfile';
-import { SCREEN_NAMES } from '../../route/rootStack';
 import {
   Container,
   HeaderContainer,
@@ -17,6 +13,7 @@ import {
   Thumbnail,
   TitleText,
 } from './home.style';
+import { useHome } from './useHome';
 
 interface Props {
   navigation: any;
@@ -24,41 +21,32 @@ interface Props {
 
 interface ArticleItemType {
   item: {
-    title : string,
-    poster_path : string,
-    id: number 
+    title: string;
+    poster_path: string;
+    id: number;
   };
-  index: number
+  index: number;
 }
 
 const HomeScreen: React.FC<Props> = ({navigation}) => {
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
-  const {data} = useSelector((state: any) => state.movies);
+  const {data, logoutUser, loadInitData, loadMoreData} = useHome();
 
   useEffect(() => {
-    dispatch(fetchData(1));
+    loadInitData();
   }, []);
 
   const renderListItem = ({item}: ArticleItemType) => {
     return (
       <ItemContainer>
-        <Thumbnail
-          source={{uri: `${Config.IMAGE_PATH}${item.poster_path}`}}
-        />
+        <Thumbnail source={{uri: `${Config.IMAGE_PATH}${item.poster_path}`}} />
         <TitleText numberOfLines={1}>{item.title}</TitleText>
       </ItemContainer>
     );
   };
 
-  const onEndReached = () => {
-    if (data.page < data.total_pages) {
-      dispatch(fetchData(data.page + 1, data.results));
-      return;
-    }
-  };
-  
-  const logoutUser = () => {
+  const logout = () => {
     Alert.alert(
       t('logout'),
       t('areYouSure'),
@@ -66,13 +54,7 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
         {text: t('no'), style: 'cancel'},
         {
           text: t('yes'),
-          onPress: () => {
-            dispatch(setUser({email: '', password: ''}))
-            navigation.reset({
-              index: 0,
-              routes: [{name: SCREEN_NAMES.LOGIN}],
-            });
-          },
+          onPress: logoutUser,
         },
       ],
       {cancelable: false},
@@ -83,7 +65,7 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
     <SafeAreaView>
       <HeaderContainer>
         <HeaderText>{t('popularMovies')}</HeaderText>
-        <TouchableOpacity onPress={logoutUser}>
+        <TouchableOpacity onPress={logout}>
           <ImageContainer source={require('../../assests/images/logout.png')} />
         </TouchableOpacity>
       </HeaderContainer>
@@ -96,7 +78,7 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
           data={data.results}
           onEndReachedThreshold={0.5}
           showsVerticalScrollIndicator={false}
-          onEndReached={onEndReached}
+          onEndReached={loadMoreData}
           renderItem={renderListItem}
         />
       </Container>
