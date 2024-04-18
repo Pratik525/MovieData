@@ -1,6 +1,5 @@
 import React from 'react';
-import {I18nManager} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {I18nManager, TouchableOpacity} from 'react-native';
 import RNRestart from 'react-native-restart';
 import i18n from '../../locales/i18Next';
 import {useAppDispatch} from '../../redux/store';

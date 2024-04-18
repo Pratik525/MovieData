@@ -29,14 +29,13 @@ interface ArticleItemType {
 }
 
 const HomeScreen: React.FC<Props> = ({navigation}) => {
-  const dispatch = useAppDispatch();
   const {t} = useTranslation();
   const {data, logoutUser, loadInitData, loadMoreData} = useHome();
 
   useEffect(() => {
     loadInitData();
   }, []);
-
+  
   const renderListItem = ({item}: ArticleItemType) => {
     return (
       <ItemContainer>
