@@ -40,4 +40,3 @@ Application flow:
 ![Simulator Screenshot - iPhone 14 - 2024-04-18 at 16 04 56](https://github.com/Pratik525/MovieData/assets/11808965/66d2d23c-6f41-4076-a470-a1a2108c1001)
 ![Simulator Screenshot - iPhone 14 - 2024-04-18 at 16 05 04](https://github.com/Pratik525/MovieData/assets/11808965/f1414ed4-6689-40d0-a8f2-30b51f6a1767)
 ![Simulator Screenshot - iPhone 14 - 2024-04-18 at 16 05 19](https://github.com/Pratik525/MovieData/assets/11808965/b6f2791b-1d4f-491a-8682-ba430c5767df)
-![Simulator Screenshot - iPhone 15 Pro - 2024-04-17 at 11 28 57](https://github.com/Pratik525/MovieData/assets/11808965/6e0eb8fe-31a0-478c-aa48-1590a3171a9c)
